@@ -25,14 +25,14 @@ class Transport(StrEnum):
 @app.callback()
 def serve(
     transport: Transport = typer.Option(
-        Transport.STDIO, envvar="OPENDART_MCP_TRANSPORT", help="Transport protocol: stdio | http"
+        Transport.STDIO,
+        envvar="OPENDART_MCP_TRANSPORT",
+        help="Transport protocol: stdio | http",
     ),
     host: str = typer.Option(
         "127.0.0.1", envvar="OPENDART_MCP_HOST", help="HTTP bind address"
     ),
-    port: int = typer.Option(
-        8000, envvar="OPENDART_MCP_PORT", help="HTTP port"
-    ),
+    port: int = typer.Option(8000, envvar="OPENDART_MCP_PORT", help="HTTP port"),
     api_key: str | None = typer.Option(
         None, envvar="OPENDART_API_KEY", help="OpenDART API key"
     ),
