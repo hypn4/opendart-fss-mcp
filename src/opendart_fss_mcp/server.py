@@ -14,6 +14,7 @@ from opendart_fss_mcp.tools import (
     registration,
     report,
     shareholder,
+    utility,
 )
 
 try:
@@ -26,6 +27,9 @@ mcp = FastMCP(
     instructions=(
         "한국 금융감독원 전자공시시스템(DART) API를 통해 "
         "기업 공시, 재무제표, 지분, 주요사항 등을 조회합니다.\n\n"
+        "## 중요: 오늘 날짜 확인\n"
+        "날짜 관련 작업 전에 반드시 `utility_get_current_date` 도구로 "
+        "오늘 날짜를 확인하세요.\n\n"
         "## 중요: 회사 검색 워크플로우\n"
         "대부분의 도구는 corp_code(고유번호, 8자리)를 필요로 합니다.\n"
         "사용자가 회사명이나 종목코드를 제공한 경우, "
@@ -52,6 +56,7 @@ _SERVERS = [
     (shareholder.mcp, "shareholder"),
     (major_event.mcp, "event"),
     (registration.mcp, "registration"),
+    (utility.mcp, "utility"),
 ]
 
 
