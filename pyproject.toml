@@ -13,6 +13,7 @@ dependencies = [
     "msgspec>=0.20.0",
     "opendart-fss>=0.2.0",
     "python-dotenv>=1.2.1",
+    "rapidfuzz>=3.14.3",
     "typer>=0.15.0",
 ]
 
