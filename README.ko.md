@@ -17,6 +17,10 @@
 - DART API 6개 카테고리를 아우르는 **84개 도구** — 공시검색, 재무제표, 정기보고서, 지분공시, 주요사항, 증권신고서
 - **stdio** 및 **HTTP (Streamable HTTP)** MCP 서버 모드 지원
 - **Claude Desktop**, **Claude Code** 등 MCP 호환 클라이언트와 연동
+- **스마트 기업 검색** — 6단계 검색: 한국어 초성 검색 및 오타 자동 교정(fuzzy matching) 지원
+  - `"삼성전자"` 정확 일치, `"삼성"` 접두사, `"전자"` 부분 문자열
+  - `"ㅅㅅㅈㅈ"` 초성 → 삼성전자, `"ㅅㅅSDI"` 혼합 → 삼성SDI
+  - `"삼선전자"` 오타 교정 → 삼성전자
 - [FastMCP](https://github.com/jlowin/fastmcp) 및 [opendart-fss](https://github.com/hypn4/opendart-fss-python) SDK 기반
 
 ## 사전 요구사항
@@ -129,6 +133,24 @@ opendart-mcp --transport http --host 127.0.0.1 --port 8000
 ```bash
 fastmcp run src/opendart_fss_mcp/server.py:mcp
 ```
+
+### 사용 예시
+
+> 삼성전자 2024년 연결 재무제표 보여줘
+
+> 삼성전자, SK하이닉스, LG전자의 2023년 매출과 영업이익 비교해줘
+
+> 현대자동차 최대주주 현황 알려줘
+
+> 삼성전자 작년 배당금 얼마야?
+
+> 2024년 상반기 M&A 관련 공시 검색해줘
+
+> 삼성전자 최근 전환사채 발행한 적 있어?
+
+> 포스코홀딩스 임원 보수 보여줘
+
+> 카카오 감사의견 어때?
 
 ## 제공 도구
 

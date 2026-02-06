@@ -17,6 +17,10 @@ MCP server for Korea's DART (Financial Supervisory Service) corporate disclosure
 - **84 tools** covering 6 DART API categories — disclosure search, financial statements, periodic reports, shareholding, major events, and securities registration
 - Runs as a **stdio** or **HTTP (Streamable HTTP)** MCP server
 - Works with **Claude Desktop**, **Claude Code**, and any MCP-compatible client
+- **Smart company search** — 6-tier search with Korean initial consonant (chosung) matching and fuzzy typo correction
+  - `"삼성전자"` exact match, `"삼성"` prefix, `"전자"` substring
+  - `"ㅅㅅㅈㅈ"` chosung → 삼성전자, `"ㅅㅅSDI"` mixed → 삼성SDI
+  - `"삼선전자"` fuzzy → 삼성전자
 - Built on [FastMCP](https://github.com/jlowin/fastmcp) and [opendart-fss](https://github.com/hypn4/opendart-fss-python) SDK
 
 ## Prerequisites
@@ -129,6 +133,24 @@ opendart-mcp --transport http --host 127.0.0.1 --port 8000
 ```bash
 fastmcp run src/opendart_fss_mcp/server.py:mcp
 ```
+
+### Example Prompts
+
+> Show me Samsung Electronics' 2024 consolidated financial statements
+
+> Compare revenue and operating profit for Samsung, SK Hynix, and LG Electronics in 2023
+
+> Who are the largest shareholders of Hyundai Motor?
+
+> What dividends did Samsung pay last year?
+
+> Search for M&A-related disclosures from January to June 2024
+
+> Has Samsung announced any convertible bond issuances recently?
+
+> Show me the executive compensation for POSCO Holdings
+
+> What is the auditor's opinion on Kakao's financial statements?
 
 ## Available Tools
 
