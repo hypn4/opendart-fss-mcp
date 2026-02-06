@@ -187,3 +187,90 @@ async def test_cache_reuses_data(cache: CorpCodeCache) -> None:
     await cache.search(client, "삼성")
     await cache.search(client, "LG")
     client.disclosure.download_corp_codes.assert_awaited_once()
+
+
+# -- Chosung search tests ------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_chosung_pure_search(cache: CorpCodeCache) -> None:
+    """Pure chosung query 'ㅅㅅㅈㅈ' should match 삼성전자."""
+    client = _mock_client()
+    results = await cache.search(client, "ㅅㅅㅈㅈ")
+    names = [e.corp_name for e in results]
+    assert "삼성전자" in names
+
+
+@pytest.mark.asyncio
+async def test_chosung_prefix_search(cache: CorpCodeCache) -> None:
+    """Chosung prefix 'ㅅㅅ' should match all 삼성* companies."""
+    client = _mock_client()
+    results = await cache.search(client, "ㅅㅅ", max_results=20)
+    names = [e.corp_name for e in results]
+    assert "삼성전자" in names
+    assert "삼성SDI" in names
+    assert "삼성생명" in names
+
+
+@pytest.mark.asyncio
+async def test_chosung_mixed_search(cache: CorpCodeCache) -> None:
+    """Mixed chosung+alpha query 'ㅅㅅsdi' should match 삼성SDI."""
+    client = _mock_client()
+    results = await cache.search(client, "ㅅㅅSDI")
+    names = [e.corp_name for e in results]
+    assert "삼성SDI" in names
+
+
+@pytest.mark.asyncio
+async def test_chosung_does_not_override_exact(cache: CorpCodeCache) -> None:
+    """Exact name match should come before chosung matches."""
+    client = _mock_client()
+    results = await cache.search(client, "삼성전자")
+    assert results[0].corp_name == "삼성전자"
+
+
+# -- Fuzzy search tests --------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_fuzzy_typo_correction(cache: CorpCodeCache) -> None:
+    """Fuzzy matching should correct typo '삼선전자' → 삼성전자."""
+    client = _mock_client()
+    results = await cache.search(client, "삼선전자")
+    names = [e.corp_name for e in results]
+    assert "삼성전자" in names
+
+
+@pytest.mark.asyncio
+async def test_fuzzy_no_garbage_results(cache: CorpCodeCache) -> None:
+    """Completely unrelated query should not return garbage fuzzy results."""
+    client = _mock_client()
+    results = await cache.search(client, "xyz무관한쿼리abc")
+    assert results == []
+
+
+@pytest.mark.asyncio
+async def test_deterministic_before_fuzzy(cache: CorpCodeCache) -> None:
+    """Exact/prefix/substring results must come before fuzzy results."""
+    client = _mock_client()
+    # "삼성" matches prefix for 삼성전자, 삼성SDI, 삼성생명 and substring for 비상장삼성
+    # Fuzzy results (if any) should come after these
+    results = await cache.search(client, "삼성", max_results=20)
+    names = [e.corp_name for e in results]
+    prefix_names = {"삼성전자", "삼성SDI", "삼성생명"}
+    # All prefix matches should appear before any non-prefix/non-substring match
+    prefix_indices = [names.index(n) for n in prefix_names if n in names]
+    other_indices = [
+        i for i, n in enumerate(names) if n not in prefix_names and n != "비상장삼성"
+    ]
+    if prefix_indices and other_indices:
+        assert max(prefix_indices) < min(other_indices)
+
+
+@pytest.mark.asyncio
+async def test_chosung_entry_field_computed(cache: CorpCodeCache) -> None:
+    """Verify that corp_name_chosung is precomputed on load."""
+    client = _mock_client()
+    await cache.search(client, "삼성")  # trigger load
+    entry = next(e for e in cache._entries if e.corp_name == "삼성전자")
+    assert entry.corp_name_chosung == "ㅅㅅㅈㅈ"
