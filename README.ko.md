@@ -61,6 +61,27 @@ cp .env.example .env
 
 Claude Desktop 설정 파일(`claude_desktop_config.json`)에 추가합니다:
 
+**PyPI에서 실행:**
+
+```json
+{
+  "mcpServers": {
+    "opendart": {
+      "command": "uvx",
+      "args": [
+        "--from", "opendart-fss-mcp",
+        "opendart-mcp"
+      ],
+      "env": {
+        "OPENDART_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+**소스에서 실행:**
+
 ```json
 {
   "mcpServers": {
@@ -81,8 +102,16 @@ Claude Desktop 설정 파일(`claude_desktop_config.json`)에 추가합니다:
 
 ### Claude Code
 
+**PyPI에서 실행:**
+
 ```bash
-claude mcp add opendart -- uv run --directory /path/to/opendart-fss-mcp opendart-mcp
+claude mcp add opendart -e OPENDART_API_KEY=your_api_key_here -- uvx --from opendart-fss-mcp opendart-mcp
+```
+
+**소스에서 실행:**
+
+```bash
+claude mcp add opendart -e OPENDART_API_KEY=your_api_key_here -- uv run --directory /path/to/opendart-fss-mcp opendart-mcp
 ```
 
 ### CLI

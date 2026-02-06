@@ -61,6 +61,27 @@ cp .env.example .env
 
 Add to your Claude Desktop configuration (`claude_desktop_config.json`):
 
+**From PyPI:**
+
+```json
+{
+  "mcpServers": {
+    "opendart": {
+      "command": "uvx",
+      "args": [
+        "--from", "opendart-fss-mcp",
+        "opendart-mcp"
+      ],
+      "env": {
+        "OPENDART_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+**From source:**
+
 ```json
 {
   "mcpServers": {
@@ -81,8 +102,16 @@ Add to your Claude Desktop configuration (`claude_desktop_config.json`):
 
 ### Claude Code
 
+**From PyPI:**
+
 ```bash
-claude mcp add opendart -- uv run --directory /path/to/opendart-fss-mcp opendart-mcp
+claude mcp add opendart -e OPENDART_API_KEY=your_api_key_here -- uvx --from opendart-fss-mcp opendart-mcp
+```
+
+**From source:**
+
+```bash
+claude mcp add opendart -e OPENDART_API_KEY=your_api_key_here -- uv run --directory /path/to/opendart-fss-mcp opendart-mcp
 ```
 
 ### CLI
