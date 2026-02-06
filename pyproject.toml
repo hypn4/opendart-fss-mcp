@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "opendart-fss-mcp"
+dynamic = ["version"]
+description = "OpenDART FSS MCP Server"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "fastmcp>=2.14.0",
+    "msgspec>=0.20.0",
+    "opendart-fss>=0.2.0",
+    "python-dotenv>=1.2.1",
+    "typer>=0.15.0",
+]
+
+[project.scripts]
+opendart-mcp = "opendart_fss_mcp.cli:app"
+
+[dependency-groups]
+dev = [
+    "hatch-vcs>=0.4.0",
+    "pyright>=1.1.408",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.25.0",
+    "ruff>=0.15.0",
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/opendart_fss_mcp/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/opendart_fss_mcp"]
