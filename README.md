@@ -14,7 +14,7 @@ MCP server for Korea's DART (Financial Supervisory Service) corporate disclosure
 
 ## Features
 
-- **84 tools** covering 6 DART API categories — disclosure search, financial statements, periodic reports, shareholding, major events, and securities registration
+- **85 tools** covering 7 categories — disclosure search, financial statements, periodic reports, shareholding, major events, securities registration, and utilities
 - Runs as a **stdio** or **HTTP (Streamable HTTP)** MCP server
 - Works with **Claude Desktop**, **Claude Code**, and any MCP-compatible client
 - **Smart company search** — 6-tier search with Korean initial consonant (chosung) matching and fuzzy typo correction
@@ -154,7 +154,7 @@ fastmcp run src/opendart_fss_mcp/server.py:mcp
 
 ## Available Tools
 
-84 tools organized into 6 categories:
+85 tools organized into 7 categories:
 
 | Category | Prefix | Tools | Description |
 |---|---|---|---|
@@ -164,6 +164,7 @@ fastmcp run src/opendart_fss_mcp/server.py:mcp
 | Shareholding | `shareholder_` | 2 | Major shareholder and executive holdings |
 | Major Events | `event_` | 36 | M&A, capital changes, stock events, lawsuits, and more |
 | Registration | `registration_` | 6 | Securities registration statement details |
+| Utility | `utility_` | 1 | Current date/time (KST) |
 
 ## Development
 

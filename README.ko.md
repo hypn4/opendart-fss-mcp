@@ -14,7 +14,7 @@
 
 ## 주요 기능
 
-- DART API 6개 카테고리를 아우르는 **84개 도구** — 공시검색, 재무제표, 정기보고서, 지분공시, 주요사항, 증권신고서
+- 7개 카테고리를 아우르는 **85개 도구** — 공시검색, 재무제표, 정기보고서, 지분공시, 주요사항, 증권신고서, 유틸리티
 - **stdio** 및 **HTTP (Streamable HTTP)** MCP 서버 모드 지원
 - **Claude Desktop**, **Claude Code** 등 MCP 호환 클라이언트와 연동
 - **스마트 기업 검색** — 6단계 검색: 한국어 초성 검색 및 오타 자동 교정(fuzzy matching) 지원
@@ -154,7 +154,7 @@ fastmcp run src/opendart_fss_mcp/server.py:mcp
 
 ## 제공 도구
 
-6개 카테고리, 총 84개 도구:
+7개 카테고리, 총 85개 도구:
 
 | 카테고리 | 접두사 | 도구 수 | 설명 |
 |---|---|---|---|
@@ -164,6 +164,7 @@ fastmcp run src/opendart_fss_mcp/server.py:mcp
 | 지분공시 | `shareholder_` | 2 | 대량보유 및 임원 지분 |
 | 주요사항 | `event_` | 36 | M&A, 자본변동, 주식이벤트, 소송 등 |
 | 증권신고서 | `registration_` | 6 | 증권신고서 세부정보 |
+| 유틸리티 | `utility_` | 1 | 현재 날짜/시간 (KST) |
 
 ## 개발
 
